@@ -10,8 +10,7 @@ void deepCopystr(char * destinationString, char * otherString);
 // default constructor
 MyString::MyString()
 {
-	aString = new char[2];
-	aString[0] = '0';
+	aString = nullptr;
 }
 
 // constructor that takes a char* parameter
@@ -34,7 +33,7 @@ MyString::MyString(const MyString &other)
 // destructor
 MyString::~MyString()
 {
-	delete[] aString;
+	delete aString;
 }
 
 // getter function for operator<<
@@ -47,8 +46,10 @@ MyString MyString::operator=(const MyString &other)
 {
 	if (this != &other)
 	{
+		int otherSize = strlen(other.aString) + 1; // +1 for null byte
 		delete[] aString;
-		deepCopystr(aString, other.aString);
+		aString = new char[otherSize];
+		strcpy_s(aString, otherSize, other.aString);
 	}
 
 	return *this;
@@ -70,5 +71,3 @@ void deepCopystr(char * destinationString, char * other)
 	destinationString = new char[otherSize];
 	strcpy_s(destinationString, otherSize, other);
 }
-
-

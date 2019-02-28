@@ -9,8 +9,8 @@ private:
 public:
 	MyString();
 	MyString(char *str);
-	MyString(const MyString &other);
 	~MyString();
+	MyString(const MyString &other); // copy constructor
 	char* c_str() const; // getter function for operator<<
 	MyString operator=(const MyString &other);
 };

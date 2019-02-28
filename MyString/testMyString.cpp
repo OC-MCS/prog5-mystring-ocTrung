@@ -8,7 +8,7 @@ using namespace std;
 int main()
 {
 	char s1[6] =  "Billy";
-	char s2[] = "Bob";
+	char s2[4] = "Bob";
 
 	MyString a(s1);
 
@@ -16,9 +16,11 @@ int main()
 
 	MyString b(s2);
 
-	b = a;
+	a = b;
 
-	cout << b;
+	cout << a << endl;
+
+
 
 	return 0;
 }
