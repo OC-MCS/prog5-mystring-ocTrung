@@ -5,54 +5,74 @@ using namespace std;
 
 #include "MyString.h"
 
-void deepCopystr(char * destinationString, char * otherString);
+void deepCopystr(char * &destinationString, char * otherString);
 
 // default constructor
 MyString::MyString()
 {
-	aString = nullptr;
+	str = nullptr;
 }
 
 // constructor that takes a char* parameter
-MyString::MyString(char *str)
+MyString::MyString(char *s)
 {
-	int strSize = strlen(str) + 1; // +1 for null byte
-	aString = new char[strSize];
+	int strSize = strlen(s) + 1; // +1 for null byte
+	str = new char[strSize];
 	for (int i = 0; i < strSize; i++)
 	{
-		aString[i] = str[i];
+		str[i] = s[i];
 	}
 }
 
 // copy constructor
 MyString::MyString(const MyString &other)
 {
-	deepCopystr(aString, other.aString);
+	deepCopystr(str, other.str);
 }
 
 // destructor
 MyString::~MyString()
 {
-	delete aString;
+	delete[] str;
 }
 
-// getter function for operator<<
-char* MyString::c_str() const
-{
-	return aString;
-}
-
+// assignment operator to do a = b
+// returns pointer to a new cstring
 MyString MyString::operator=(const MyString &other)
 {
 	if (this != &other)
 	{
-		int otherSize = strlen(other.aString) + 1; // +1 for null byte
-		delete[] aString;
-		aString = new char[otherSize];
-		strcpy_s(aString, otherSize, other.aString);
+		delete[] str;
+		deepCopystr(str, other.str);
 	}
 
 	return *this;
+}
+
+// returns pointer to dyn alloc array for string
+MyString MyString::operator+(const MyString &other)
+{
+	int size = strlen(str) + strlen(other.str) + 2; // 1 for null byte, 1 for space char
+
+	// create a copy of s1
+	char *strcopy;
+	strcopy = new char[size];
+	strcpy_s(strcopy, size, str);
+
+	// concat a space on s1copy
+	strcat_s(strcopy, size, " ");
+	// concat s2 on s1copy
+	strcat_s(strcopy, size, other.str);
+
+	// return s1copy
+	return strcopy;
+}
+
+
+// getter function for operator<<
+char* MyString::c_str() const
+{
+	return str;
 }
 
 /*========================================
@@ -65,7 +85,7 @@ ostream &operator << (ostream &strm, const MyString &s)
 	return strm;
 }
 
-void deepCopystr(char * destinationString, char * other)
+void deepCopystr(char * &destinationString, char * other)
 {
 	int otherSize = strlen(other) + 1; // +1 for null byte
 	destinationString = new char[otherSize];
