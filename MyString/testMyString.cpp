@@ -7,11 +7,18 @@ using namespace std;
 
 int main()
 {
-	char acstring[6] =  "Billy";
+	char s1[6] =  "Billy";
+	char s2[] = "Bob";
 
-	MyString a(acstring);
+	MyString a(s1);
 
-	cout << a; 
+	cout << a << endl;
+
+	MyString b(s2);
+
+	b = a;
+
+	cout << b;
 
 	return 0;
 }

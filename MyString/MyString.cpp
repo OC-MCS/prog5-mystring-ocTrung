@@ -7,12 +7,11 @@ using namespace std;
 
 void deepCopystr(char * destinationString, char * otherString);
 
-
 // default constructor
 MyString::MyString()
 {
-	aString = new char;
-	*aString = 0;
+	aString = new char[2];
+	aString[0] = '0';
 }
 
 // constructor that takes a char* parameter
@@ -32,10 +31,27 @@ MyString::MyString(const MyString &other)
 	deepCopystr(aString, other.aString);
 }
 
+// destructor
+MyString::~MyString()
+{
+	delete[] aString;
+}
+
 // getter function for operator<<
 char* MyString::c_str() const
 {
 	return aString;
+}
+
+MyString MyString::operator=(const MyString &other)
+{
+	if (this != &other)
+	{
+		delete[] aString;
+		deepCopystr(aString, other.aString);
+	}
+
+	return *this;
 }
 
 /*========================================
@@ -48,11 +64,11 @@ ostream &operator << (ostream &strm, const MyString &s)
 	return strm;
 }
 
-void deepCopystr(char * destinationString, char * otherString)
+void deepCopystr(char * destinationString, char * other)
 {
-	int otherSize = strlen(otherString) + 1; // +1 for null byte
+	int otherSize = strlen(other) + 1; // +1 for null byte
 	destinationString = new char[otherSize];
-	strcpy_s(destinationString, otherSize, otherString);
+	strcpy_s(destinationString, otherSize, other);
 }
 
 
