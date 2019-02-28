@@ -14,15 +14,12 @@ MyString::MyString()
 }
 
 // constructor that takes a char* parameter
-MyString::MyString(char *s)
+MyString::MyString(const char* s)
 {
 	int strSize = strlen(s) + 1; // +1 for null byte
 	str = new char[strSize];
-	for (int i = 0; i < strSize; i++)
-	{
-		str[i] = s[i];
-	}
-}
+	strcpy_s(str, strSize, s);
+}       
 
 // copy constructor
 MyString::MyString(const MyString &other)
@@ -68,6 +65,15 @@ MyString MyString::operator+(const MyString &other)
 	return strcopy;
 }
 
+bool MyString::operator==(const MyString &other)
+{
+	bool isEqual = false;
+	if (strcmp(str, other.str) == 0)
+	{
+		isEqual = true;
+	}
+	return isEqual;
+}
 
 // getter function for operator<<
 char* MyString::c_str() const
