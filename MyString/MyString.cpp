@@ -4,7 +4,6 @@
 using namespace std;
 
 #include "MyString.h"
-
 void deepCopystr(char * &destinationString, char * otherString);
 
 // default constructor
@@ -24,17 +23,18 @@ MyString::MyString(const char* s)
 // copy constructor
 MyString::MyString(const MyString &other)
 {
+	//cout << "Copy constructor ran" << endl;
 	deepCopystr(str, other.str);
 }
 
 // destructor
 MyString::~MyString()
 {
+	//cout << "Destructor ran" << endl;
 	delete[] str;
 }
 
-// assignment operator to do a = b
-// returns pointer to a new cstring
+// assignment operator to do a = b; returns pointer to a new cstring
 MyString MyString::operator=(const MyString &other)
 {
 	if (this != &other)
@@ -46,25 +46,21 @@ MyString MyString::operator=(const MyString &other)
 	return *this;
 }
 
-// returns pointer to dyn alloc array for string
+// +operator to concat two strings; returns pointer to dyn alloc array for string
 MyString MyString::operator+(const MyString &other)
 {
 	int size = strlen(str) + strlen(other.str) + 2; // 1 for null byte, 1 for space char
 
-	// create a copy of s1
 	char *strcopy;
 	strcopy = new char[size];
 	strcpy_s(strcopy, size, str);
+	strcat_s(strcopy, size, " "); 	
+	strcat_s(strcopy, size, other.str);	
 
-	// concat a space on s1copy
-	strcat_s(strcopy, size, " ");
-	// concat s2 on s1copy
-	strcat_s(strcopy, size, other.str);
-
-	// return s1copy
 	return strcopy;
 }
 
+// ==operator to compare two strings; returns true or false
 bool MyString::operator==(const MyString &other)
 {
 	bool isEqual = false;
@@ -81,9 +77,10 @@ char* MyString::c_str() const
 	return str;
 }
 
-/*========================================
-Non member functions
-========================================*/
+/*===============================================
+Non member functions below
+================================================*/
+
 //operator to output MyString
 ostream &operator << (ostream &strm, const MyString &s)
 {
@@ -91,6 +88,12 @@ ostream &operator << (ostream &strm, const MyString &s)
 	return strm;
 }
 
+/*===================================
+name: deepCopystr
+function: deep copy of a string
+parameters: destination string and string to copy
+return: none
+=====================================*/
 void deepCopystr(char * &destinationString, char * other)
 {
 	int otherSize = strlen(other) + 1; // +1 for null byte

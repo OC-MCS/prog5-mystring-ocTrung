@@ -1,10 +1,21 @@
-// test driver code goes here
+//============================================================
+// Trung Nguyenvo
+// due: 2.29.19
+// Programming Assignment #5
+// Description: String Class
+//============================================================
 #include <iostream>	
 #include <cstring>
 using namespace std;
 
 #include "MyString.h"
 
+/*===================================
+name: testMyStringFunc
+function: assigns a cstring to the argument
+parameters: MyString that should not be changed 
+return: returns a MyString
+=====================================*/
 MyString testMyStringFunc(MyString s)
 {
 	char a[] = "Not hello";
@@ -37,7 +48,6 @@ int main()
 	cout << endl;
 
 	// testing operator=
-
 	cout << "before: " << endl;
 	cout << "s1: " << s1 << endl;
 	cout << "s2: " << s2 << endl;
@@ -62,8 +72,45 @@ int main()
 
 	s1 = s1;
 	cout << "s1 = s1 " << endl;
-	cout << "s1: " << s1 << endl;
+	cout << "s1: " << s1 << endl << endl;
 
+	// testing the + operator
+	s1 = "hello";
+	s2 = "world";
+	cout << "Before +operator" << endl;
+	cout << "s1: " << s1 << endl;
+	cout << "s2: " << s2 << endl;
+	s3 = s1 + s2;
+	cout << "After +operator" << endl;
+	cout << "s3: " << s3 << endl << endl;
+
+	// testing the == operator
+	cout << "s1: " << s1 << endl;
+	cout << "s2: " << s2 << endl;
+	if (s1 == s2)
+	{
+		cout << "s1 == s2" << endl;
+	}
+	else
+	{
+		cout << "s1 != s2" << endl;
+
+	}
+	cout << endl;
+
+	s1 = "hello";
+	s2 = "hello";
+	cout << "s1: " << s1 << endl;
+	cout << "s2: " << s2 << endl;
+	if (s1 == s2)
+	{
+		cout << "s1 == s2" << endl;
+	}
+	else
+	{
+		cout << "s1 != s2" << endl;
+
+	}
 	cout << endl;
 
 	return 0;

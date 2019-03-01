@@ -5,7 +5,6 @@ class MyString
 {
 private:
 	char * str;
-
 public:
 	MyString();
 	MyString(const char* s);
